@@ -1,0 +1,264 @@
+# COLMAP with CUDA-enabled Ceres - Git Ignore File
+
+# ==============================================================================
+# Project-Specific Directories
+# ==============================================================================
+
+# Documentation source files (original guides)
+Docs/
+
+# Test data (can be large)
+testData/
+
+# Output directory for test results
+output/
+
+# vcpkg package manager and all its contents
+vcpkg/
+
+# ==============================================================================
+# Build Artifacts and Logs
+# ==============================================================================
+
+# Build directories
+build/
+buildtrees/
+packages/
+installed/
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# SHA512 calculation results
+*_sha512.txt
+
+# ==============================================================================
+# Windows
+# ==============================================================================
+
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# ==============================================================================
+# Visual Studio / MSBuild
+# ==============================================================================
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio cache/options directory
+.vs/
+
+# Visual Studio Trace Files
+*.e2e
+
+# ==============================================================================
+# CMake
+# ==============================================================================
+
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+# ==============================================================================
+# Compiled Object files
+# ==============================================================================
+
+*.slo
+*.lo
+*.o
+*.obj
+*.ko
+*.elf
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# ==============================================================================
+# Python (if any scripts)
+# ==============================================================================
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ==============================================================================
+# IDE and Editor Files
+# ==============================================================================
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+*~
+
+# ==============================================================================
+# System and Backup Files
+# ==============================================================================
+
+# Backup files
+*.bak
+*.backup
+*~
+*.swp
+*.swo
+
+# Archives (unless needed for distribution)
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# ==============================================================================
+# CUDA / GPU
+# ==============================================================================
+
+# CUDA compiled files
+*.cubin
+*.fatbin
+*.ptx
+
+# ==============================================================================
+# Documentation Build Output
+# ==============================================================================
+
+# If generating docs
+docs/_build/
+site/
+
+# ==============================================================================
+# Environment and Configuration
+# ==============================================================================
+
+# Environment variable files (if any)
+.env
+.env.local
+.env.*.local
+
+# Local configuration files
+local_config.ps1
+*_local.ps1
+
+# ==============================================================================
+# Keep These Files
+# ==============================================================================
+
+# Important: DO track these files
+!README.md
+!MANUAL_CONFIGURATION_GUIDE.md
+!QUICKSTART.md
+!CHANGELOG.md
+!.gitignore
+
+# PowerShell scripts should be tracked
+!*.ps1
+
+# Markdown files should be tracked
+!*.md
+
+# ==============================================================================
+# Notes
+# ==============================================================================
+
+# This .gitignore is configured for a COLMAP + Ceres build environment
+# It excludes large directories (vcpkg, Docs, testData) and build artifacts
+# All PowerShell build scripts and markdown documentation are tracked
+
