@@ -1,4 +1,4 @@
-# COLMAP with CUDA-enabled Ceres Solver - Build Guide
+# COLMAP and GLOMAP with CUDA-enabled Ceres Solver - Build Guide
 
 This repository contains automated scripts and documentation for building COLMAP 3.13.0 with CUDA-enabled Ceres Solver 2.3.0 on Windows, including cuDSS 0.7 support for GPU-accelerated bundle adjustment.
 
@@ -15,28 +15,28 @@ This build process enables GPU acceleration for COLMAP's bundle adjustment by:
 
 ### Required Software (Manual Installation)
 
-1. **CUDA Toolkit 12.0 or later** ✅ INSTALLED (Version 12.8 detected)
+1. **CUDA Toolkit 12.0 or later**
    - Download from: https://developer.nvidia.com/cuda-downloads
    - The installer should set environment variables automatically
 
-2. **cuDSS 0.7 or later** ✅ INSTALLED (v0.7 detected)
+2. **cuDSS 0.7 or later** 
    - Download from: https://developer.nvidia.com/cudss-downloads
    - This is CRITICAL - must be installed before building
    - **Recommended installation:** `C:\NVIDIA_cuDSS\v0.7` (path without spaces)
    - Default installation: `C:\Program Files\NVIDIA cuDSS` (may cause CMake issues)
    - Note: Version 0.7 is the current version and provides optimal performance
 
-3. **Visual Studio 2019 or later (or Build Tools 2022)** ✅ INSTALLED
+3. **Visual Studio 2019 or later (or Build Tools 2022)**
    - Download from: https://visualstudio.microsoft.com/
    - Required workload: "Desktop development with C++"
    - Visual Studio Build Tools 2022 is sufficient and recommended
 
-4. **Git** ✅ INSTALLED (Version 2.40.1 detected)
+4. **Git** 
 
 ### Automated Components
 
 These are handled by the scripts:
-- vcpkg (package manager) ✅ CLONED AND BOOTSTRAPPED
+- vcpkg (package manager) 
 - CMake (installed by vcpkg if needed)
 - CUDA_PATH environment variable (auto-detected and set)
 - All required dependencies (Eigen, Boost, etc.)
@@ -146,10 +146,6 @@ E:\Programs\Gaussians\colmap_Ceres_2.3\
 ├── calculate_colmap_sha512.ps1     # SHA512 hash calculator for version upgrades
 ├── MANUAL_CONFIGURATION_GUIDE.md   # Detailed manual steps guide
 ├── QUICKSTART.md                   # Quick reference guide
-├── Docs\
-│   ├── CompileCeres_GPUBA.txt      # Original compilation guide
-│   ├── install.rst                 # COLMAP installation docs
-│   └── portfilecmake.txt           # Ceres portfile template
 └── vcpkg\                          # vcpkg package manager (created)
     ├── vcpkg.exe
     ├── ports\ceres\                # Ceres configuration
@@ -255,11 +251,104 @@ If you need to rebuild after fixing issues:
 
 ## 📚 References
 
-- Original guide: [Docs/CompileCeres_GPUBA.txt](Docs/CompileCeres_GPUBA.txt)
-- COLMAP installation: [Docs/install.rst](Docs/install.rst)
+
 - COLMAP GitHub: https://github.com/colmap/colmap
+- GLOMAP GitHub: https://github.com/colmap/glomap
 - Ceres Solver: http://ceres-solver.org/
 - vcpkg: https://github.com/microsoft/vcpkg
+
+## 🚀 Building GLOMAP with GPU-Enabled COLMAP
+
+GLOMAP is a fast global structure-from-motion pipeline that can use your GPU-enabled COLMAP installation for even faster reconstruction.
+
+### Quick Start
+
+```powershell
+# 1. Check environment
+.\check_glomap_environment.ps1
+
+# 2. Install Ninja (optional, for faster builds)
+.\install_ninja.ps1
+
+# 3. Clone GLOMAP
+.\clone_glomap.ps1
+
+# 4. Build GLOMAP (5-15 minutes)
+.\build_glomap.ps1
+
+# 5. Test installation
+.\test_glomap.ps1
+```
+
+### What You Get
+
+- **GLOMAP** with GPU-enabled COLMAP 3.13.0 integration
+- **GPU-accelerated bundle adjustment** (inherited from COLMAP/Ceres)
+- **1-2 orders of magnitude faster** than standard COLMAP SfM
+- **Compatible output format** - works with existing COLMAP workflows
+
+### Usage Example
+
+```powershell
+# Path to GLOMAP executable
+$glomap = ".\glomap\install\bin\glomap.exe"
+
+# Add vcpkg DLLs to PATH
+$env:PATH = "$(Resolve-Path '.\vcpkg\installed\x64-windows\bin');$env:PATH"
+
+# Run GLOMAP mapper
+& $glomap mapper `
+    --database_path ./database.db `
+    --image_path ./images `
+    --output_path ./glomap_output
+```
+
+### Integration with COLMAP
+
+GLOMAP works seamlessly with COLMAP databases:
+
+```powershell
+# 1. Extract features with COLMAP
+$colmap = ".\vcpkg\packages\colmap_x64-windows\tools\colmap\colmap.exe"
+& $colmap feature_extractor `
+    --image_path ./images `
+    --database_path ./database.db
+
+# 2. Match features with COLMAP
+& $colmap exhaustive_matcher `
+    --database_path ./database.db
+
+# 3. Reconstruct with GLOMAP (much faster!)
+& $glomap mapper `
+    --database_path ./database.db `
+    --image_path ./images `
+    --output_path ./output
+
+# 4. Visualize with COLMAP GUI
+& $colmap gui --import_path ./output
+```
+
+### Build Details
+
+- **Build time:** 5-15 minutes (with Ninja) or 15-30 minutes (with MSBuild)
+- **Uses existing COLMAP:** Links against your GPU-enabled COLMAP 3.13.0
+- **GPU support:** Inherited from COLMAP/Ceres (CUDA + cuDSS 0.7)
+- **Output format:** COLMAP sparse reconstruction format
+
+### Troubleshooting
+
+**DLL not found errors:**
+```powershell
+# Add vcpkg binaries to PATH
+$env:PATH = "$(Resolve-Path '.\vcpkg\installed\x64-windows\bin');$env:PATH"
+```
+
+**Want to rebuild:**
+```powershell
+.\build_glomap.ps1 -Clean
+```
+
+For more information, see the [GLOMAP GitHub repository](https://github.com/colmap/glomap).
 
 ## ✅ Success Indicators
 
@@ -317,11 +406,5 @@ To upgrade to a newer version of COLMAP:
 
 4. **Rebuild COLMAP** following Steps 4-7 above
 
----
 
-**Status:** ✅ COLMAP 3.13.0 with CUDA-enabled Ceres 2.3.0 + cuDSS 0.7 - Fully operational!
-
-**Current Version:** COLMAP 3.13.0 (commit 0b31f98133b470eae62811b557dc2bcff1e4f9a5)
-
-**Last Updated:** November 28, 2025
 

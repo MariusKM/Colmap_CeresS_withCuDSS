@@ -16,6 +16,12 @@ output/
 # vcpkg package manager and all its contents
 vcpkg/
 
+# GLOMAP repository and build artifacts
+glomap/
+
+# Ninja build system (if installed locally)
+ninja/
+
 # ==============================================================================
 # Build Artifacts and Logs
 # ==============================================================================
