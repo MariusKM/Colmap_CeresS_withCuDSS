@@ -15,10 +15,10 @@ $CuDSSPathFormatted = $CuDSSPath -replace '\\', '/'
 Write-Host "cuDSS CMake Path: $CuDSSPathFormatted" -ForegroundColor Yellow
 
 # Paths
-$vcpkgRoot = "E:\Programs\Gaussians\colmap_Ceres_2.3\vcpkg"
+$vcpkgRoot = "..\..\vcpkg"
 $ceresVcpkgJson = "$vcpkgRoot\ports\ceres\vcpkg.json"
 $ceresPortfile = "$vcpkgRoot\ports\ceres\portfile.cmake"
-$portfileSource = "E:\Programs\Gaussians\colmap_Ceres_2.3\Docs\portfilecmake.txt"
+$portfileSource = "..\..\Docs\portfilecmake.txt"
 
 # Check if vcpkg exists
 if (-not (Test-Path $vcpkgRoot)) {

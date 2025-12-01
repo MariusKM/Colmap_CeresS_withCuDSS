@@ -6,7 +6,7 @@ Write-Host "Build COLMAP with CUDA - Initial Build" -ForegroundColor Cyan
 Write-Host "======================================`n" -ForegroundColor Cyan
 
 # Change to vcpkg directory
-$vcpkgRoot = "E:\Programs\Gaussians\colmap_Ceres_2.3\vcpkg"
+$vcpkgRoot = "..\..\vcpkg"
 
 if (-not (Test-Path $vcpkgRoot)) {
     Write-Host "❌ Error: vcpkg not found at $vcpkgRoot" -ForegroundColor Red
@@ -95,15 +95,15 @@ if (Test-Path $colmapSourceBase) {
                 Write-Host "`n4. Save the file" -ForegroundColor White
                 
                 Write-Host "`n5. Run the final build script:" -ForegroundColor White
-                Write-Host "   cd E:\Programs\Gaussians\colmap_Ceres_2.3" -ForegroundColor Cyan
-                Write-Host "   .\build_colmap_final.ps1" -ForegroundColor Cyan
+                Write-Host "   cd ..\.." -ForegroundColor Cyan
+                Write-Host "   .\scripts\colmap\build_colmap_final.ps1" -ForegroundColor Cyan
                 
                 # Create a helper script for quick editing
                 Write-Host "`n======================================" -ForegroundColor Cyan
                 Write-Host "Helper Script Created" -ForegroundColor Green
                 Write-Host "======================================" -ForegroundColor Cyan
                 
-                $editScriptPath = "E:\Programs\Gaussians\colmap_Ceres_2.3\edit_colmap_cmake.ps1"
+                $editScriptPath = "..\..\edit_colmap_cmake.ps1"
                 $editScriptContent = @"
 # Quick Edit Script for COLMAP CMakeLists.txt
 # This script helps you edit the CMakeLists.txt file
@@ -152,7 +152,7 @@ try {
                 $editScriptContent | Set-Content $editScriptPath
                 
                 Write-Host "`nQuick edit option:" -ForegroundColor White
-                Write-Host "   cd E:\Programs\Gaussians\colmap_Ceres_2.3" -ForegroundColor Cyan
+                Write-Host "   cd ..\.." -ForegroundColor Cyan
                 Write-Host '   .\edit_colmap_cmake.ps1 -CuDSSPath "YOUR_CUDSS_PATH"' -ForegroundColor Cyan
                 
                 break

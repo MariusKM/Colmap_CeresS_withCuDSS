@@ -34,7 +34,7 @@ if (-not $env:CUDA_PATH) {
 }
 
 # Change to vcpkg directory
-$vcpkgRoot = "E:\Programs\Gaussians\colmap_Ceres_2.3\vcpkg"
+$vcpkgRoot = "..\..\vcpkg"
 
 if (-not (Test-Path $vcpkgRoot)) {
     Write-Host "❌ Error: vcpkg not found at $vcpkgRoot" -ForegroundColor Red

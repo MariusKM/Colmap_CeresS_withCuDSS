@@ -6,10 +6,10 @@ Write-Host "Bundle Adjuster GPU Test" -ForegroundColor Cyan
 Write-Host "======================================`n" -ForegroundColor Cyan
 
 # Paths
-$colmapExe = "E:\Programs\Gaussians\colmap_Ceres_2.3\vcpkg\packages\colmap_x64-windows\tools\colmap\colmap.exe"
-$inputPath = ".\testData\0"
-$outputPath = ".\output"
-$logFile = ".\bundle_adjuster_gpu_test.log"
+$colmapExe = "..\..\vcpkg\packages\colmap_x64-windows\tools\colmap\colmap.exe"
+$inputPath = "..\..\testData\0"
+$outputPath = "..\..\output"
+$logFile = "..\..\bundle_adjuster_gpu_test.log"
 
 # Ensure COLMAP tools directory is in PATH
 $colmapToolsDir = Split-Path $colmapExe -Parent

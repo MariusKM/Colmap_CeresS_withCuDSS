@@ -6,7 +6,7 @@ Write-Host "Build COLMAP with CUDA - Final Build" -ForegroundColor Cyan
 Write-Host "======================================`n" -ForegroundColor Cyan
 
 # Change to vcpkg directory
-$vcpkgRoot = "E:\Programs\Gaussians\colmap_Ceres_2.3\vcpkg"
+$vcpkgRoot = "..\..\vcpkg"
 
 if (-not (Test-Path $vcpkgRoot)) {
     Write-Host "❌ Error: vcpkg not found at $vcpkgRoot" -ForegroundColor Red
@@ -142,8 +142,8 @@ Write-Host "Next Steps" -ForegroundColor Cyan
 Write-Host "======================================" -ForegroundColor Cyan
 
 Write-Host "`n1. Test the GPU-enabled COLMAP:" -ForegroundColor White
-Write-Host "   cd E:\Programs\Gaussians\colmap_Ceres_2.3" -ForegroundColor Cyan
-Write-Host "   .\test_colmap_gpu.ps1" -ForegroundColor Cyan
+Write-Host "   cd ..\.." -ForegroundColor Cyan
+Write-Host "   .\scripts\colmap\test_colmap_gpu.ps1" -ForegroundColor Cyan
 
 Write-Host "`n2. Or manually test:" -ForegroundColor White
 Write-Host "   & '$colmapExePath' -h" -ForegroundColor Cyan

@@ -6,7 +6,7 @@ Write-Host "Test COLMAP GPU Support" -ForegroundColor Cyan
 Write-Host "======================================`n" -ForegroundColor Cyan
 
 # Locate COLMAP executable
-$colmapExePath = "E:\Programs\Gaussians\colmap_Ceres_2.3\vcpkg\packages\colmap_x64-windows\tools\colmap\colmap.exe"
+$colmapExePath = "..\..\vcpkg\packages\colmap_x64-windows\tools\colmap\colmap.exe"
 
 if (-not (Test-Path $colmapExePath)) {
     Write-Host "❌ Error: COLMAP executable not found at:" -ForegroundColor Red
@@ -14,7 +14,7 @@ if (-not (Test-Path $colmapExePath)) {
     
     # Try to find it
     Write-Host "Searching for COLMAP executable..." -ForegroundColor Yellow
-    $vcpkgRoot = "E:\Programs\Gaussians\colmap_Ceres_2.3\vcpkg"
+    $vcpkgRoot = "..\..\vcpkg"
     $searchPath = Join-Path $vcpkgRoot "packages\colmap_x64-windows"
     
     if (Test-Path $searchPath) {

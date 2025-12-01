@@ -48,7 +48,7 @@ These are handled by the scripts:
 Run the environment check script to verify prerequisites:
 
 ```powershell
-.\check_environment.ps1
+.\scripts\colmap\check_environment.ps1
 ```
 
 **⚠️ IMPORTANT:** You must install cuDSS before proceeding!
@@ -59,10 +59,10 @@ After installing cuDSS, configure the vcpkg files with your cuDSS path:
 
 ```powershell
 # For cuDSS v0.7 (recommended installation path without spaces)
-.\configure_vcpkg_ceres.ps1 -CuDSSPath "C:/NVIDIA_cuDSS/v0.7/lib/12/cmake/cudss"
+.\scripts\colmap\configure_vcpkg_ceres.ps1 -CuDSSPath "C:/NVIDIA_cuDSS/v0.7/lib/12/cmake/cudss"
 
 # Or if installed to default location
-.\configure_vcpkg_ceres.ps1 -CuDSSPath "C:/Program Files/NVIDIA cuDSS/v0.7/lib/12/cmake/cudss"
+.\scripts\colmap\configure_vcpkg_ceres.ps1 -CuDSSPath "C:/Program Files/NVIDIA cuDSS/v0.7/lib/12/cmake/cudss"
 ```
 
 Replace the path with your actual cuDSS installation path (use forward slashes `/`).  
@@ -73,7 +73,7 @@ Replace the path with your actual cuDSS installation path (use forward slashes `
 Build Ceres with CUDA and cuDSS support (takes 30-60 minutes):
 
 ```powershell
-.\build_ceres.ps1
+.\scripts\colmap\build_ceres.ps1
 ```
 
 ### Step 4: Build COLMAP (Initial)
@@ -81,7 +81,7 @@ Build Ceres with CUDA and cuDSS support (takes 30-60 minutes):
 Start the initial COLMAP build to clone the source code:
 
 ```powershell
-.\build_colmap_initial.ps1
+.\scripts\colmap\build_colmap_initial.ps1
 ```
 
 This will clone COLMAP and may partially build it. The script will tell you the location of the CMakeLists.txt file.
@@ -108,7 +108,7 @@ set(cudss_DIR "C:/NVIDIA_cuDSS/v0.7/lib/12/cmake/cudss")
 Complete the COLMAP build (takes 45-90 minutes):
 
 ```powershell
-.\build_colmap_final.ps1
+.\scripts\colmap\build_colmap_final.ps1
 ```
 
 ### Step 7: Test GPU Support
@@ -117,10 +117,10 @@ Verify that GPU support is working with comprehensive logging:
 
 ```powershell
 # Quick test (may not show detailed output)
-.\test_colmap_gpu.ps1
+.\scripts\colmap\test_colmap_gpu.ps1
 
 # Or use the bundle adjuster test with full logging
-.\test_bundle_adjuster_gpu.ps1
+.\scripts\colmap\test_bundle_adjuster_gpu.ps1
 ```
 
 **Expected success output:**
@@ -135,15 +135,25 @@ Verify that GPU support is working with comprehensive logging:
 
 ```
 E:\Programs\Gaussians\colmap_Ceres_2.3\
-├── check_environment.ps1           # Check system prerequisites
-├── configure_vcpkg_ceres.ps1       # Configure vcpkg for Ceres 2.3.0
-├── build_ceres.ps1                 # Build Ceres with CUDA
-├── build_colmap_initial.ps1        # Initial COLMAP build
-├── edit_colmap_cmake.ps1           # Helper to edit CMakeLists.txt
-├── build_colmap_final.ps1          # Final COLMAP build
-├── test_colmap_gpu.ps1             # Quick GPU test
-├── test_bundle_adjuster_gpu.ps1    # Comprehensive bundle adjuster test
-├── calculate_colmap_sha512.ps1     # SHA512 hash calculator for version upgrades
+├── scripts\
+│   ├── colmap\                     # COLMAP build scripts
+│   │   ├── check_environment.ps1   # Check system prerequisites
+│   │   ├── configure_vcpkg_ceres.ps1 # Configure vcpkg for Ceres 2.3.0
+│   │   ├── build_ceres.ps1         # Build Ceres with CUDA
+│   │   ├── build_colmap_initial.ps1 # Initial COLMAP build
+│   │   ├── build_colmap_final.ps1  # Final COLMAP build
+│   │   ├── test_colmap_gpu.ps1     # Quick GPU test
+│   │   ├── test_bundle_adjuster_gpu.ps1 # Comprehensive bundle adjuster test
+│   │   └── calculate_colmap_sha512.ps1 # SHA512 hash calculator for version upgrades
+│   └── glomap\                     # GLOMAP build scripts
+│       ├── check_glomap_environment.ps1 # Check GLOMAP prerequisites
+│       ├── clone_glomap.ps1        # Clone GLOMAP repository
+│       ├── configure_glomap.ps1    # Configure GLOMAP build
+│       ├── build_glomap.ps1        # Build GLOMAP
+│       ├── test_glomap.ps1         # Test GLOMAP installation
+│       ├── copy_glomap_dlls.ps1    # Copy DLL dependencies
+│       └── install_ninja.ps1       # Install Ninja build system
+├── edit_colmap_cmake.ps1           # Helper to edit CMakeLists.txt (generated)
 ├── MANUAL_CONFIGURATION_GUIDE.md   # Detailed manual steps guide
 ├── QUICKSTART.md                   # Quick reference guide
 └── vcpkg\                          # vcpkg package manager (created)
@@ -199,14 +209,14 @@ $output_model_path = "C:\path\to\output"
 **Solution:** Ceres was not built with CUDA. Verify:
 1. CUDA is installed and in PATH
 2. cuDSS path is correct in `vcpkg\ports\ceres\portfile.cmake`
-3. Rebuild Ceres: `.\build_ceres.ps1`
+3. Rebuild Ceres: `.\scripts\colmap\build_ceres.ps1`
 
 ### Issue: "compiled without cuDSS support"
 **Solution:** cuDSS was not found during build. Verify:
 1. cuDSS is installed
 2. Path in portfile.cmake uses forward slashes (`/`)
 3. Path points to the `cmake/cudss` directory
-4. Rebuild Ceres: `.\build_ceres.ps1`
+4. Rebuild Ceres: `.\scripts\colmap\build_ceres.ps1`
 
 ### Issue: Build fails with CMake errors
 **Solution:**
@@ -238,7 +248,7 @@ If you need to rebuild after fixing issues:
    cd vcpkg
    .\vcpkg remove ceres:x64-windows
    cd ..
-   .\build_ceres.ps1
+   .\scripts\colmap\build_ceres.ps1
    ```
 
 2. **Rebuild COLMAP:**
@@ -246,7 +256,7 @@ If you need to rebuild after fixing issues:
    cd vcpkg
    .\vcpkg remove colmap:x64-windows
    cd ..
-   .\build_colmap_final.ps1
+   .\scripts\colmap\build_colmap_final.ps1
    ```
 
 ## 📚 References
@@ -265,19 +275,19 @@ GLOMAP is a fast global structure-from-motion pipeline that can use your GPU-ena
 
 ```powershell
 # 1. Check environment
-.\check_glomap_environment.ps1
+.\scripts\glomap\check_glomap_environment.ps1
 
 # 2. Install Ninja (optional, for faster builds)
-.\install_ninja.ps1
+.\scripts\glomap\install_ninja.ps1
 
 # 3. Clone GLOMAP
-.\clone_glomap.ps1
+.\scripts\glomap\clone_glomap.ps1
 
 # 4. Build GLOMAP (5-15 minutes)
-.\build_glomap.ps1
+.\scripts\glomap\build_glomap.ps1
 
 # 5. Test installation
-.\test_glomap.ps1
+.\scripts\glomap\test_glomap.ps1
 ```
 
 ### What You Get
@@ -345,7 +355,7 @@ $env:PATH = "$(Resolve-Path '.\vcpkg\installed\x64-windows\bin');$env:PATH"
 
 **Want to rebuild:**
 ```powershell
-.\build_glomap.ps1 -Clean
+.\scripts\glomap\build_glomap.ps1 -Clean
 ```
 
 For more information, see the [GLOMAP GitHub repository](https://github.com/colmap/glomap).
