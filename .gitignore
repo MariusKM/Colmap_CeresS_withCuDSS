@@ -17,7 +17,7 @@ output/
 vcpkg/
 
 # GLOMAP repository and build artifacts
-glomap/
+/glomap/
 
 # Ninja build system (if installed locally)
 ninja/
